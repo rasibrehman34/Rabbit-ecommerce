@@ -1,28 +1,30 @@
 const express = require("express");
 const cors = require("cors");
-const dotenv = require("dotenv")
-const connectDB = require("./config/db")
-const userRoutes = require("./routes/userRoutes")
+const dotenv = require("dotenv");
+const connectDB = require("./config/db");
+const userRoutes = require("./routes/userRoutes");
+const productRoutes = require("./routes/productRoutes");
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
-dotenv.config()
+dotenv.config();
 
-const PORT = process.env.PORT || 3000; 
+const PORT = process.env.PORT || 3000;
 
-// Connect to MongoDB 
+// Connect to MongoDB
 connectDB();
 
-
-app.get("/", (req, res) => {
-  res.send("welcom to rabbit api");
+app.get("/", (req, res) => { 
+  res.send("welcome to rabbit api");
 });
 
 // API Routes
 
-app.use("/api/users", userRoutes)
+app.use("/api/users", userRoutes);
+
+app.use("/api/products", productRoutes);
 
 app.listen(PORT, () => {
   console.log(`server is running on http://localhost:${PORT}`);
