@@ -19,13 +19,21 @@ const protect = async (req, res, next) =>{
         } catch (error){
             console.error("token varification failed: ", error);
             res.status(401).json({message: "not authorized, token failed"})
-
-
         }
-
     } else {
         res.status(401).json({message: "Not authorized, no token provided"})
     }
 };
 
-module.exports = { protect }
+// middleware for check is the user is admin 
+
+const admin = (req,res,next)=>{
+    if(req.user || req.user.role === "admin"){
+        next();
+    } else{
+        res.status(403).json({message : "not authorize as admin"})
+    }
+
+}
+
+module.exports = { protect, admin }
